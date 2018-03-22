@@ -106,7 +106,13 @@
      <Compile Include="Assets\ML-MouseGame\Scripts\MouseGameAcademy.cs" />
      <Compile Include="Assets\ML-MouseGame\Scripts\MouseGameAgent.cs" />
      <Compile Include="Assets\ML-MouseGame\Scripts\MouseGameDecision.cs" />
+     <Compile Include="Assets\ML-MouseGame\Scripts\ScoreMover.cs" />
      <Compile Include="Assets\ML-MouseGame\Scripts\TargetAgent.cs" />
+     <Compile Include="Assets\ML-MouseGame\Scripts\TargetManager.cs" />
+     <None Include="Assets\ML-MouseGame\DOTween\readme.txt" />
+     <None Include="Assets\ML-MouseGame\DOTween\DOTween43.xml" />
+     <None Include="Assets\ML-MouseGame\DOTween\DOTween50.xml" />
+     <None Include="Assets\ML-MouseGame\DOTween\DOTween46.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity2017.2.1p2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -135,19 +141,31 @@
  <HintPath>C:/Program Files/Unity2017.2.1p2/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="System.Numerics">
- <HintPath>E:/ML Agent/unity-environment/Assets/ML-Agents/Plugins/System.Numerics.dll</HintPath>
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-Agents/Plugins/System.Numerics.dll</HintPath>
  </Reference>
  <Reference Include="System.ValueTuple">
- <HintPath>E:/ML Agent/unity-environment/Assets/ML-Agents/Plugins/System.ValueTuple.dll</HintPath>
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-Agents/Plugins/System.ValueTuple.dll</HintPath>
  </Reference>
  <Reference Include="TensorFlowSharp.Android">
- <HintPath>E:/ML Agent/unity-environment/Assets/ML-Agents/Plugins/Android/TensorFlowSharp.Android.dll</HintPath>
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-Agents/Plugins/Android/TensorFlowSharp.Android.dll</HintPath>
  </Reference>
  <Reference Include="TensorFlowSharp">
- <HintPath>E:/ML Agent/unity-environment/Assets/ML-Agents/Plugins/Computer/TensorFlowSharp.dll</HintPath>
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-Agents/Plugins/Computer/TensorFlowSharp.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>E:/ML Agent/unity-environment/Assets/ML-Agents/Plugins/JSON/Newtonsoft.Json.dll</HintPath>
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-Agents/Plugins/JSON/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween">
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-MouseGame/DOTween/DOTween.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween43">
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-MouseGame/DOTween/DOTween43.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween46">
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-MouseGame/DOTween/DOTween46.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween50">
+ <HintPath>E:/ShootML/unity-environment/Assets/ML-MouseGame/DOTween/DOTween50.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>C:/Users/Koalabs/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>

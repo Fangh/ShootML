@@ -11,7 +11,6 @@ public class MouseGameAgent : Agent
 	public Text nbTry;
 
 	[Header("Private")]
-	private float bestCumulativeReward = 0;
 	private float originalZ = 0f;
 
 	void Start()

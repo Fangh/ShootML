@@ -2,21 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TargetAgent : Agent 
 {
 	[Header("References")]
 	public Transform mouseObject;
 	public GameObject hole;
+	public GameObject bloodPrefab;
+	public GameObject targetPrefab;
+
+	[Header("Balancing")]
+	public float speed = 1f;
 
 	[Header("Private")]
-	private float bestCumulativeReward = 0;
 	private float originalZ = 0f;
 	private bool isTouched = false;
+	private int score = 0;
+	private bool isBreeding = false;
+	private bool canBreed = false;
 
 	void Start()
 	{
 		originalZ = transform.position.z;
+		Invoke("CanBreed", 2f);
+	}
+
+	void CanBreed()
+	{
+		canBreed = true;
 	}
 
 	public override List<float> CollectState()
@@ -37,16 +51,15 @@ public class TargetAgent : Agent
 		
 		float action_horizontal = act[0];
 		float action_vertical = act[1];
-		Vector3 nextPos = transform.position + new Vector3( action_horizontal * Time.deltaTime,  action_vertical * Time.deltaTime, originalZ);
+		Vector3 nextPos = transform.position + new Vector3( action_horizontal * Time.deltaTime * speed,  action_vertical * Time.deltaTime * speed, originalZ);
 
-		if ( nextPos.x > -10 && nextPos.x < 10 )
+		if ( nextPos.x > -9.8f && nextPos.x < 9.8f )
 		{
-			transform.Translate( Vector3.right * action_horizontal * Time.deltaTime );
+			transform.Translate( Vector3.right * action_horizontal * Time.deltaTime * speed );
 		}
-
-		if ( nextPos.y > -5 && nextPos.y < 5 )
+		if ( nextPos.y > -4.8f && nextPos.y < 4.8f )
 		{
-			transform.Translate( Vector3.up * action_vertical * Time.deltaTime );
+			transform.Translate( Vector3.up * action_vertical * Time.deltaTime * speed );
 		}
 	}
 
@@ -60,13 +73,51 @@ public class TargetAgent : Agent
 
 	}
 
-	void OnMouseDown()
+	void StopBreeding()
+	{
+		isBreeding = false;	
+		canBreed = true;
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag  == "agent")
+		{
+			TargetAgent t = other.GetComponent<TargetAgent>();
+			if ( !t.isBreeding && canBreed && t.canBreed && TargetManager.Instance.nbTarget < 50 )
+			{
+				TargetManager.Instance.nbTarget++;
+				isBreeding = true;
+				canBreed = false;
+				Invoke("StopBreeding", 2f);
+				GameObject o = Instantiate(targetPrefab, transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0), Quaternion.identity);
+				o.transform.localScale = Vector3.zero;
+				o.GetComponent<TargetAgent>().transform.DOScale(1, 2f);
+				o.GetComponent<TargetAgent>().mouseObject = mouseObject;
+				o.GetComponent<TargetAgent>().GiveBrain(brain);
+				if ( !(o.transform.position.x > -9.8f
+					&& o.transform.position.x < -9.8f
+					&& o.transform.position.y > -4.8f
+					&& o.transform.position.y < 4.8f)  )
+					{
+						o.transform.position = new Vector3(0,0,originalZ);
+					}
+			}
+		}
+	}
+
+	public void Hit()
 	{
 		isTouched = true;
-		Vector3 mousePos = Input.mousePosition;
-		mousePos.z = 10;
-		hole.transform.position = Camera.main.ScreenToWorldPoint(mousePos);
-		hole.SetActive(true);
+		GetComponentInChildren<SpriteRenderer>().enabled = false;
+		GameObject o = Instantiate(bloodPrefab, transform.position, Quaternion.Euler(0,0,Random.Range(0f,360f)));	
+		GetComponent<Collider>().enabled = false;
+		TargetManager.Instance.nbTarget--;
+	}
 
+	public void GetOut()
+	{
+		hole.SetActive(false);
+		transform.DOMoveY(-10, 0.7f).SetEase(Ease.InBack);
 	}
 }

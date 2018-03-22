@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunBehavior : MonoBehaviour {
-
+public class GunBehavior : MonoBehaviour 
+{
 	// Use this for initialization
 	void Start () {
 		
@@ -16,6 +16,19 @@ public class GunBehavior : MonoBehaviour {
 		{
 			GetComponent<Animator>().SetTrigger("Shoot");
 		}
+		if (TargetManager.Instance.nbTarget <= 0)
+		{
+			Debug.Log("YOU WIN");
+		}
 		
+	}
+
+	void Hit()
+	{
+		Collider[] objTouched = Physics.OverlapSphere(transform.position, 0.3f);
+		for (int i = 0; i < objTouched.Length; i++)
+		{
+			objTouched[i].GetComponent<TargetAgent>().Hit();
+		}
 	}
 }
